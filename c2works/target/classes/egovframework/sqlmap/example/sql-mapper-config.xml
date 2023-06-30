@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+<!-- 	<typeAliases>
+		<typeAlias alias="searchVO" type="sample.vo.SearchConditionVO"/>
+        <typeAlias alias="sampleVO" type="sample.vo.SampleVO"/>
+    </typeAliases>  -->
+
+  <!-- myBatis Inteceptor for get column information  -->
+  <plugins>  
+    <plugin interceptor="com.nexacro.uiadapter.spring.dao.mybatis.NexacroMybatisMetaDataProvider" />
+    <plugin interceptor="com.nexacro.uiadapter.spring.dao.mybatis.NexacroMybatisResultSetHandler" />
+  </plugins>
+</configuration>

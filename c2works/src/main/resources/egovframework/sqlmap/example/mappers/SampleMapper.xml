@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="sample.service.impl.SampleMapper">
+	
+	<!-- 전체조회 쿼리  -->
+ 	<select id="loadListdo" resultType="map">
+    	SELECT * FROM test
+    	ORDER BY no ASC
+    </select>
+    
+    <!-- 조회조건 추가 쿼리  -->
+    <select id="elsedo" resultType="map" parameterType="map">
+    	SELECT * FROM test 
+    	<if test="_parameter !=null and _parameter !='' and _parameter != 'undefined' and _parameter != 0 ">
+    	WHERE no = #{rNo}
+    	</if>
+    	ORDER BY no ASC
+    </select>
+    
+</mapper> 
