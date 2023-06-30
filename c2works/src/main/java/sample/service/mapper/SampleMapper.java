@@ -1,4 +1,4 @@
-package sample.service.impl;
+package sample.service.mapper;
 
 import java.util.List;
 import java.util.Map;

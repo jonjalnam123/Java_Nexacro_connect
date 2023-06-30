@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import sample.service.SampleService;
+import sample.service.mapper.SampleMapper;
 
 @Service("sampleService")
 public class SampleServiceImpl implements SampleService {
