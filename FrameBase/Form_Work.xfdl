@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FDL version="2.1">
+  <Form id="Form_Work" width="1280" height="720" titletext="Form_Work" onload="Form_Work_onload">
+    <Layouts>
+      <Layout width="1280" height="720" screenid="Desktop_screen">
+        <Button id="Button00" taborder="0" text="조회" left="660" top="170" width="170" height="60" onclick="Button00_onclick"/>
+        <Combo id="Combo00" taborder="1" text="" left="297" top="80" width="213" height="40" index="-1" innerdataset="dsTest" codecolumn="no" datacolumn="name" canitemchange="Combo00_canitemchange" onitemchanged="Combo00_onitemchanged" autoskip="false"/>
+        <Grid id="Grid01" taborder="2" left="60" top="150" width="535" height="370" binddataset="dsGrid" autofittype="col">
+          <Formats>
+            <Format id="default">
+              <Columns>
+                <Column size="80"/>
+                <Column size="80"/>
+              </Columns>
+              <Rows>
+                <Row band="head" size="24"/>
+                <Row size="24"/>
+              </Rows>
+              <Band id="head">
+                <Cell text="no"/>
+                <Cell col="1" text="name"/>
+              </Band>
+              <Band id="body">
+                <Cell text="bind:no"/>
+                <Cell col="1" text="bind:name"/>
+              </Band>
+            </Format>
+          </Formats>
+        </Grid>
+      </Layout>
+    </Layouts>
+    <Objects>
+      <Dataset id="dsTest" oncolumnchanged="dsTest_oncolumnchanged">
+        <ColumnInfo>
+          <Column id="no" type="STRING" size="256"/>
+          <Column id="name" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+      <Dataset id="dsGrid">
+        <ColumnInfo>
+          <Column id="no" type="STRING" size="256"/>
+          <Column id="name" type="STRING" size="256"/>
+        </ColumnInfo>
+      </Dataset>
+    </Objects>
+    <Script type="xscript5.1"><![CDATA[/**
+*	개발 표준화 작업
+*	@MenuPath C:\EduPack\workspace\c2works\src\main\c2works\FrameBase
+*	@FileName Form_Work.xfdl
+*	@Creator 최정석
+*	@CreateDate 2023/06/30
+*	@Desction 해당 폼 정보 설명
+******************소스 수정 이력**********************************************
+*	date		Modifier	Description
+********************************************************************************
+*	2023/06/30		최정석		최초 생성
+*	
+*
+*/
+/**************************************************************************
+* include 영역
+**************************************************************************/
+
+/**************************************************************************
+* FORM 변수 선언 영역 (fv)
+**************************************************************************/
+
+/**************************************************************************
+* FORM EVENT 영역(onload, onbeforeclose)
+**************************************************************************/
+
+/**
+* @description 폼이 온로드 될 때 전체 조회
+*/
+this.Form_Work_onload = function(obj:nexacro.Form,e:nexacro.LoadEventInfo)
+{ 
+	var strSvcId    = "loadList";
+	var strSvcUrl   = "svcUrl::loadList.do";
+	var inData      = "";	
+	var outData     = "dsTest=dsTest";
+	var strArg      = "";
+	var callBackFnc = "fnCallback";
+	var isAsync     = true;
+	
+	this.transaction(strSvcId ,     // transaction을 구분하기 위한 svc id값
+		strSvcUrl ,   // trabsaction을 요청할 주소
+		inData ,     // 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+		outData ,     // 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+		strArg,     // 입력값으로 보낼 arguments, a=b
+		callBackFnc,   // transaction의 결과를 받을 Function 이름
+		isAsync);     // 비동기통신 여부 [생략가능]
+};
+
+/**************************************************************************
+* CRUD 및 TRANSACTION 서비스 호출 처리
+**************************************************************************/
+
+/**
+* @description 버튼 클릭시 조건조회 트랜잭션
+*/
+this.Button00_onclick = function(obj:nexacro.Button,e:nexacro.ClickEventInfo)
+{
+	var sNo = this.Combo00.value;
+	
+	var strSvcId    = "elsedo";
+	var strSvcUrl   = "svcUrl::else.do";
+	var inData      = "";	
+	var outData     = "dsGrid=dsGrid";
+	var strArg      = "sNo=" + sNo;
+	var callBackFnc = "fnCallback";
+	var isAsync     = true;
+	
+	this.transaction(strSvcId ,     // transaction을 구분하기 위한 svc id값
+		strSvcUrl ,   // trabsaction을 요청할 주소
+		inData ,     // 입력값으로 보낼 dataset id , a=b형태로 실제이름과 입력이름을 매칭
+		outData ,     // 처리결과값으로 받을 dataset id, a=b형태로 실제이름과 입력이름을 매칭
+		strArg,     // 입력값으로 보낼 arguments, a=b
+		callBackFnc,   // transaction의 결과를 받을 Function 이름
+		isAsync);     // 비동기통신 여부 [생략가능]
+};
+
+/**************************************************************************
+* CALLBACK 콜백 처리부분(Transaction, Popup)
+**************************************************************************/
+
+/**
+* @description 콜백
+*/
+this.fnCallback = function (svcId, errCd, errMsg)
+{
+	if(svcId == "elsedo") { //조회결과 알림
+		this.alert("조회완료");
+	}else if (svcId == "loadList") { //콤보박스에 ALL 값 기본적으로 두기
+		this.Combo00.set_text(this.dsTest.getColumn(0,"name"));  
+	}
+};
+
+/**************************************************************************
+* 사용자 FUNCTION 영역
+**************************************************************************/
+
+/**************************************************************************
+* 각 COMPONENT 별 EVENT 영역
+**************************************************************************/
+
+
+
+
+
+]]></Script>
+  </Form>
+</FDL>
